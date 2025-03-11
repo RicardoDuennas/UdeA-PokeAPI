@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 
-public class PokemonManager : MonoBehaviour
+public class PokemonAPIManager : MonoBehaviour
 {
     // Dependencies
     private PokemonApiClient apiClient;
