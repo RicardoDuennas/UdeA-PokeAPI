@@ -18,7 +18,8 @@ public class ReadmeEditor : Editor
 
     static ReadmeEditor()
     {
-        EditorApplication.delayCall += SelectReadmeAutomatically;
+    // Stops Unity selecting the Readme at startup
+    //    EditorApplication.delayCall += SelectReadmeAutomatically;
     }
 
     static void RemoveTutorial()
