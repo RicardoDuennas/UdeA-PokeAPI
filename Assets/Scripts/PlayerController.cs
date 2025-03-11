@@ -9,9 +9,9 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
 
     [Header("Movement Settings")]
-    [SerializeField] 
-    private float walkSpeed = 5f;
+    [SerializeField] private float walkSpeed = 5f;
     private PlayerInputActions playerInputActions;
+    [SerializeField]  private float gravity = -3.5f;
 
     [Header("Input")]
     private Vector2 moveInput;
@@ -34,7 +34,6 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();    
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
     }
 
     void FixedUpdate()
@@ -50,15 +49,23 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerMovement(){
 
+        // Calculate movement according to rotation and WASD keys
         Vector3 tempRot = this.transform.eulerAngles;
-        Vector3 move =  Quaternion.Euler(0, tempRot.y,0)
+        Vector3 move =  Quaternion.Euler(0, tempRot.y, 0)
             * new Vector3(0, 0, moveInput.y)
             * walkSpeed * Time.deltaTime;
         
+        // Apply gravity
+        if (!controller.isGrounded){
+            move += new Vector3(0, gravity, 0);
+        }
+
+        // Move controller
         controller.Move(move);
     }
     private void PlayerRotation(){
 
+        // Apply player's rotation according to the mouse input 
         var rotateDirection = playerInputActions.Player_Map.Rotate.ReadValue<float>();
 
         Vector3 rot = Vector3.up * Time.deltaTime * 30f * rotateDirection;
