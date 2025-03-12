@@ -1,0 +1,20 @@
+.header {
+}
+
+.title {
+}
+
+.blue {
+    background-color: rgba(0, 19, 255, 0.59);
+}
+
+.red {
+    background-color: rgba(255, 0, 0, 0.55);
+}
+
+.yellow {
+    background-color: rgba(255, 249, 0, 0.84);
+}
+
+.white {
+}
