@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
     [Header("References")]
     private CharacterController controller;
 
@@ -16,12 +15,13 @@ public class PlayerController : MonoBehaviour
     [Header("Input")]
     private Vector2 moveInput;
 
-
-
-    private void OnEnable(){
+    // Methods to enable and disable input system accordingly
+    private void OnEnable()
+    {
         playerInputActions.Player_Map.Enable();
     }
-    private void OnDisable(){
+    private void OnDisable()
+    {
         playerInputActions.Player_Map.Disable();
     }
 
@@ -43,11 +43,30 @@ public class PlayerController : MonoBehaviour
         PlayerMovement();
     }
 
-    private void InputManagement(){
+    private void OnControllerColliderHit(ControllerColliderHit hit) 
+    {
+
+        // Get the name and tag of the collided object
+        string objectName = hit.gameObject.name;
+        string objectTag = hit.gameObject.tag;
+           
+        if (objectTag == "Pokemon")
+        {
+            // Check the name of the Pokemon Egg collided
+            PokemonObject pokemonObject = hit.gameObject.GetComponent<PokemonObject>();
+            PokemonPool.Instance.ReleasePokemon(pokemonObject);
+            // Log the name of the Pokemon Egg collided
+            Debug.Log("Pokemon Released: " + objectName);
+        }   
+    }
+
+    private void InputManagement()
+    {
         moveInput = playerInputActions.Player_Map.Move.ReadValue<Vector2>();
     }
 
-    private void PlayerMovement(){
+    private void PlayerMovement()
+    {
 
         // Calculate movement according to rotation and WASD keys
         Vector3 tempRot = this.transform.eulerAngles;
@@ -56,14 +75,16 @@ public class PlayerController : MonoBehaviour
             * walkSpeed * Time.deltaTime;
         
         // Apply gravity
-        if (!controller.isGrounded){
+        if (!controller.isGrounded)
+        {
             move += new Vector3(0, gravity, 0);
         }
 
         // Move controller
         controller.Move(move);
     }
-    private void PlayerRotation(){
+    private void PlayerRotation()
+    {
 
         // Apply player's rotation according to the mouse input 
         var rotateDirection = playerInputActions.Player_Map.Rotate.ReadValue<float>();
