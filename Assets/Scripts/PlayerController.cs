@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
             PokemonObject pokemonObject = hit.gameObject.GetComponent<PokemonObject>();
             PokemonPool.Instance.ReleasePokemon(pokemonObject);
             pokeAPIManager.AddPokemonById(id);
-            Debug.Log("Pokemon Released: " + id);
+            // Debug.Log("Pokemon Released: " + id);
         }   
     }
 

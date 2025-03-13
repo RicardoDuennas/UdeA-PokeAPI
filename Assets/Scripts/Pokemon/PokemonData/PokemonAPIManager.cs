@@ -13,11 +13,11 @@ public class PokemonAPIManager : MonoBehaviour
     [SerializeField] private List<PokemonData> pokemonDataList = new List<PokemonData>();
     [SerializeField] private PokemonInventory inventory;
     [SerializeField] private PokemonPool pokePool;
-    public bool fetchedPokemons = false;
+    private InfoPanelManager _infoPanelManager;
 
     private void Start()
     {
-
+        _infoPanelManager = FindObjectOfType<InfoPanelManager>();
         StartCoroutine(FetchPokemonData());
         inventory = new PokemonInventory();
     }
@@ -39,12 +39,16 @@ public class PokemonAPIManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Log1: " + i);
                     ProcessPokemonData(webRequest.downloadHandler.text, i);
                 }
             }
         }
-        fetchedPokemons = true;
+    }
+
+    private IEnumerator ClearMessage()
+    {
+        yield return new WaitForSeconds(4);
+        _infoPanelManager.UpdateMessage("");
     }
 
     private void ProcessPokemonData(string jsonData, int id)
@@ -84,23 +88,26 @@ public class PokemonAPIManager : MonoBehaviour
 
         pokemonData.position = spawnPosition;
         PutEggInScene(id, spawnPosition);
-
+        _infoPanelManager.UpdateMessage($"Pokemon added to the scene: \n{pokemonData.pokemonName}");
+        StartCoroutine(ClearMessage());
         pokemonDataList.Add(pokemonData);
 
         // // Check quantity of abilities and moves of every Pokemon
-        Debug.Log($"Processed Pokemon: {pokemonData.pokemonName}");
-        Debug.Log($"id: {pokemonData.id}");
-        Debug.Log($"position: {pokemonData.position}");
-        Debug.Log($"pokemonID: {pokemonData.pokemonID}");
-        Debug.Log($"Type: {pokemonData.type}");
+        // Debug.Log($"Processed Pokemon: {pokemonData.pokemonName}");
+        // Debug.Log($"id: {pokemonData.id}");
+        // Debug.Log($"position: {pokemonData.position}");
+        // Debug.Log($"pokemonID: {pokemonData.pokemonID}");
+        // Debug.Log($"Type: {pokemonData.type}");
         // Debug.Log($"Abilities: {pokemonData.abilities.Length}");
         // Debug.Log($"Moves: {pokemonData.moves.Length}");
-        Debug.Log("------------------------------");
-        Debug.Log("\n\n");
+        // Debug.Log("------------------------------");
+        // Debug.Log("\n\n");
     }
 
     public void AddPokemonById(int id){
         inventory.AddPokemon(pokemonDataList[id]);
+        _infoPanelManager.UpdateMessage($"You caught: \n{pokemonDataList[id].pokemonName}");
+        StartCoroutine(ClearMessage());
  
         // Debug.Log("id: " + pokemonDataList[id].id);            
         // Debug.Log("name: " + pokemonDataList[id].pokemonName);            
@@ -109,14 +116,14 @@ public class PokemonAPIManager : MonoBehaviour
         // Debug.Log("------------------------------");
         // Debug.Log("\n\n");
 
-        string tmp = "";
-
-        for (int i = 0; i < inventory.GetCount(); i++)
-        {
-            tmp += pokemonDataList[i].pokemonName;
-            tmp += ", ";
-        }
-        Debug.Log(tmp);            
+        // Debug collected Pokemon names inline
+        // string tmp = "";
+        // for (int i = 0; i < inventory.GetCount(); i++)
+        // {
+        //     tmp += pokemonDataList[i].pokemonName;
+        //     tmp += ", ";
+        // }
+        // Debug.Log(tmp);            
     }
 
     public void PutEggInScene(int id, Vector3 spawnPosition)
