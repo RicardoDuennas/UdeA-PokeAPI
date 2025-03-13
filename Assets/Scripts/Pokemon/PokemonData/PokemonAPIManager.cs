@@ -12,6 +12,7 @@ public class PokemonAPIManager : MonoBehaviour
     [SerializeField] private int numberOfPokemons = 20;   
     [SerializeField] private List<PokemonData> pokemonDataList = new List<PokemonData>();
     [SerializeField] private PokemonInventory inventory;
+    [SerializeField] private PokemonPool pokePool;
     public bool fetchedPokemons = false;
 
     private void Start()
@@ -38,6 +39,7 @@ public class PokemonAPIManager : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log("Log1: " + i);
                     ProcessPokemonData(webRequest.downloadHandler.text, i);
                 }
             }
@@ -74,11 +76,21 @@ public class PokemonAPIManager : MonoBehaviour
             pokemonData.moves[i] = pokemonResponse.moves[i].move.name;
         }
 
+        Vector3 spawnPosition = new Vector3(
+            Random.Range(-80f, 80f), 
+            1.5f, 
+            Random.Range(-80f, 80f)
+        );
+
+        pokemonData.position = spawnPosition;
+        PutEggInScene(id, spawnPosition);
+
         pokemonDataList.Add(pokemonData);
 
-        // Check quantity of abilities and moves of every Pokemon
+        // // Check quantity of abilities and moves of every Pokemon
         Debug.Log($"Processed Pokemon: {pokemonData.pokemonName}");
         Debug.Log($"id: {pokemonData.id}");
+        Debug.Log($"position: {pokemonData.position}");
         Debug.Log($"pokemonID: {pokemonData.pokemonID}");
         Debug.Log($"Type: {pokemonData.type}");
         // Debug.Log($"Abilities: {pokemonData.abilities.Length}");
@@ -90,7 +102,6 @@ public class PokemonAPIManager : MonoBehaviour
     public void AddPokemonById(int id){
         inventory.AddPokemon(pokemonDataList[id]);
  
-
         // Debug.Log("id: " + pokemonDataList[id].id);            
         // Debug.Log("name: " + pokemonDataList[id].pokemonName);            
         // Debug.Log("type: " + pokemonDataList[id].type);            
@@ -106,6 +117,11 @@ public class PokemonAPIManager : MonoBehaviour
             tmp += ", ";
         }
         Debug.Log(tmp);            
+    }
+
+    public void PutEggInScene(int id, Vector3 spawnPosition)
+    {
+        pokePool.SpawnEggs(id, spawnPosition);
     }
 
     [System.Serializable]

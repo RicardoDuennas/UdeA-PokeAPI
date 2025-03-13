@@ -34,32 +34,19 @@ public class PokemonPool : MonoBehaviour
 
     void Start()
     {
-        SpawnEggs(20);
+        // SpawnEggs(20);
     }
 
     // Method to spawn the first eggs
-    public void SpawnEggs(int count)
+    public void SpawnEggs(int id, Vector3 spawnPosition)
     {
-        for (int i = 0; i < count; i++)
-        {
-            // Generate random position within the defined area
-            // TO DO: Set random initial position in polar coordinates so they fall into the circle
-            Vector3 spawnPosition = new Vector3(
-                Random.Range(-80f, 80f), 
-                1.5f, 
-                Random.Range(-80f, 80f)
-            );
-            
-            var pokemonObject = pokePool.Get();
-            
-            pokemonObject.tag = "Pokemon";
-            pokemonObject.name = "Pokemon" + i;
-            pokemonObject.id = i;
-            pokemonObject.transform.position = spawnPosition;
-            // Log Pokemon Egg spawn position
-            //Debug.Log("spawnPosition " + pokemonObject.transform.position);
-            pokemonObject.transform.parent = pokemonContainer.transform;
-        }
+        var pokemonObject = pokePool.Get();
+        
+        pokemonObject.tag = "Pokemon";
+        pokemonObject.name = "Pokemon" + id;
+        pokemonObject.id = id;
+        pokemonObject.transform.position = spawnPosition;
+        pokemonObject.transform.parent = pokemonContainer.transform;
     }
 
     private IEnumerator ReturnToPoolAfterDelay(PokemonObject pokemon, float delay)

@@ -3134,8 +3134,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2077988918}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.28247, y: 0.7907438, z: -10.583893}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3188,4 +3188,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfPokemons: 20
   pokemonDataList: []
+  pokePool: {fileID: 431659932}
   fetchedPokemons: 0
