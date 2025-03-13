@@ -1,42 +1,46 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections;
+using UnityEditor.Search;
 
 public class InfoSideBarManager : MonoBehaviour
 {
-    private UIDocument uiDocument;
-    private VisualElement sidebarPanel;
-    private VisualElement pokemonListPanel;
-    private VisualElement cardsPanel;
-    private VisualElement openCloseBtn;
-    private bool sidebarOpen = false; 
+    private UIDocument _uiDocument;
+    private VisualElement _sidebarPanel;
+    private VisualElement _pokemonListPanel;
+    private VisualElement _cardPanel;
+    private VisualElement _openCloseBtn;
+    private bool _sidebarOpen = false; 
     private const float ANIMATION_DURATION = 0.3f;
-    private PlayerController playerCont;
+    private PlayerController _playerCont;
     private VisualElement _listContainer;
+    private Button _backButton;
 
-    
-    [SerializeField]
-    private GameObject player;
+    [SerializeField] private PokemonAPIManager _pokeApiManager;    
+    [SerializeField] private GameObject _player;
 
     private Coroutine animationCoroutine;
     
     private void Awake()
     {
-        uiDocument = GetComponent<UIDocument>();
-        playerCont = player.GetComponent<PlayerController>();
+        _uiDocument = GetComponent<UIDocument>();
+        _playerCont = _player.GetComponent<PlayerController>();
     }
     
     private void OnEnable()
     {
-        var root = uiDocument.rootVisualElement;
+        var root = _uiDocument.rootVisualElement;
         
-        sidebarPanel = root.Q<VisualElement>("Sidebar");
-        openCloseBtn = root.Q<VisualElement>("OpenCloseBtn");
-        pokemonListPanel = root.Q<VisualElement>("PokemonList");
-        cardsPanel = root.Q<VisualElement>("Cards");
+        _sidebarPanel = root.Q<VisualElement>("Sidebar");
+        _openCloseBtn = root.Q<VisualElement>("OpenCloseBtn");
+        _pokemonListPanel = root.Q<VisualElement>("PokemonList");
+        _cardPanel = root.Q<VisualElement>("Card");
         _listContainer = root.Q<VisualElement>("ListView");
+        _backButton = root.Q<Button>("BackButton");
         
-        openCloseBtn.RegisterCallback<ClickEvent>(OnOpenCloseBtnClick);
+        _backButton.clicked += OnBackButtonClicked;
+
+        _openCloseBtn.RegisterCallback<ClickEvent>(OnOpenCloseBtnClick);
         
         InitializeSidebar();
     }
@@ -44,22 +48,22 @@ public class InfoSideBarManager : MonoBehaviour
     private void InitializeSidebar()
     {
         // Set initial width to closed state and transparent
-        sidebarPanel.style.width = new StyleLength(new Length(0f, LengthUnit.Percent));
-        sidebarPanel.style.opacity = 0;
-        cardsPanel.style.display = DisplayStyle.None;
-        pokemonListPanel.style.display = DisplayStyle.Flex;
+        _sidebarPanel.style.width = new StyleLength(new Length(0f, LengthUnit.Percent));
+        _sidebarPanel.style.opacity = 0;
+        _cardPanel.style.display = DisplayStyle.None;
+        _pokemonListPanel.style.display = DisplayStyle.Flex;
         // PopulatePokemonList();
     }
     
     private void OnOpenCloseBtnClick(ClickEvent evt)
     {
 
-        if (sidebarOpen) {
-            playerCont.ResumeGame();
+        if (_sidebarOpen) {
+            _playerCont.ResumeGame();
          } 
 
         // Toggle sidebar state
-        sidebarOpen = !sidebarOpen;
+        _sidebarOpen = !_sidebarOpen;
         
         AnimateSidebar();
     }
@@ -76,11 +80,11 @@ public class InfoSideBarManager : MonoBehaviour
     
     private IEnumerator AnimateSidebarWidthAndOpacity()
     {
-        float startWidth = sidebarPanel.style.width.value.value;
-        float targetWidth = sidebarOpen ? 50f : 0f;
+        float startWidth = _sidebarPanel.style.width.value.value;
+        float targetWidth = _sidebarOpen ? 30f : 0f;
         
-        float startOpacity = sidebarPanel.style.opacity.value;
-        float targetOpacity = sidebarOpen ? 1f : 0f;
+        float startOpacity = _sidebarPanel.style.opacity.value;
+        float targetOpacity = _sidebarOpen ? 1f : 0f;
         
         float elapsedTime = 0f;
         
@@ -93,25 +97,25 @@ public class InfoSideBarManager : MonoBehaviour
             float currentWidth = Mathf.Lerp(startWidth, targetWidth, smoothT);
             float currentOpacity = Mathf.Lerp(startOpacity, targetOpacity, smoothT);
             
-            sidebarPanel.style.width = new StyleLength(new Length(currentWidth, LengthUnit.Percent));
-            sidebarPanel.style.opacity = currentOpacity;            
+            _sidebarPanel.style.width = new StyleLength(new Length(currentWidth, LengthUnit.Percent));
+            _sidebarPanel.style.opacity = currentOpacity;            
             yield return null;
         }
         
-        sidebarPanel.style.width = new StyleLength(new Length(targetWidth, LengthUnit.Percent));
-        sidebarPanel.style.opacity = targetOpacity;
+        _sidebarPanel.style.width = new StyleLength(new Length(targetWidth, LengthUnit.Percent));
+        _sidebarPanel.style.opacity = targetOpacity;
 
-        if (sidebarOpen) {
-            playerCont.PauseGame();
+        if (_sidebarOpen) {
+            _playerCont.PauseGame();
          } 
     }
     
     private void OnDisable()
     {
         // Unregister the callback when the component is disabled
-        if (openCloseBtn != null)
+        if (_openCloseBtn != null)
         {
-            openCloseBtn.UnregisterCallback<ClickEvent>(OnOpenCloseBtnClick);
+            _openCloseBtn.UnregisterCallback<ClickEvent>(OnOpenCloseBtnClick);
         }
         
         // Stop any animations
@@ -239,6 +243,7 @@ public class InfoSideBarManager : MonoBehaviour
         if (pokemonNameLabel != null)
         {
             string pokemonName = pokemonNameLabel.text;
+            ShowCard(pokemonName);
             Debug.Log($"Clicked on Pokemon: {pokemonName}");
 
             // Add your custom logic here, e.g., display details, highlight the panel, etc.
@@ -246,5 +251,123 @@ public class InfoSideBarManager : MonoBehaviour
         }
     }
 
-    
+    private void OnBackButtonClicked()
+    {
+        // Switch back to the PokemonList view
+        _cardPanel.style.display = DisplayStyle.None;
+        _pokemonListPanel.style.display = DisplayStyle.Flex;
+    }
+
+    private void ShowCard(string name){
+        _cardPanel.style.display = DisplayStyle.Flex;
+        _pokemonListPanel.style.display = DisplayStyle.None;
+
+        var headerElement = _cardPanel.Q<VisualElement>("Header");
+        var nameElement = headerElement.Q<VisualElement>("Name");
+        var nameLabel = nameElement.Q<Label>();
+        nameLabel.text = name;
+
+        string[] moves = _pokeApiManager.GetMovesByName(name); 
+        var movesContainer = _cardPanel.Q<ScrollView>("MovesContainer");
+        movesContainer.Clear();
+
+        foreach (string move in moves)
+        {
+            // Create a new message panel
+            var movePanel = new VisualElement
+            {
+                style =
+                {
+                    backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.8f),
+                    unityTextAlign = TextAnchor.MiddleCenter,
+                    paddingTop = 2,
+                    paddingBottom = 2,
+                    paddingLeft = 10,
+                    paddingRight = 10,
+                    marginBottom = 5,
+                    borderTopLeftRadius =10,
+                    borderTopRightRadius =10,
+                    borderBottomLeftRadius =10,
+                    borderBottomRightRadius =10,
+                    whiteSpace = WhiteSpace.Normal
+                }
+            };
+
+            // Add a Label to the message panel
+            var moveLabel = new Label(move)
+            {
+                style =
+                {
+                    fontSize = 12,
+                    color = Color.white
+                }
+            };
+            movePanel.Add(moveLabel);
+
+            // Add hover effects
+            movePanel.RegisterCallback<MouseEnterEvent>(evt =>
+            {
+                movePanel.style.backgroundColor = new Color(0.4f, 0.4f, 0.4f, 0.9f); // Darker background on hover
+            });
+
+            movePanel.RegisterCallback<MouseLeaveEvent>(evt =>
+            {
+                movePanel.style.backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.8f); // Revert background color
+            });
+
+            movesContainer.Add(movePanel);
+        }
+
+        string[] abilities = _pokeApiManager.GetAbilitiesByName(name); 
+        var abilitiesContainer = _cardPanel.Q<ScrollView>("AbilitiesContainer");
+        abilitiesContainer.Clear();
+
+        foreach (string ability in abilities)
+        {
+
+            // Create a new message panel
+            var abilityPanel = new VisualElement
+            {
+                style =
+                {
+                    backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.8f),
+                    unityTextAlign = TextAnchor.MiddleCenter,
+                    paddingTop = 2,
+                    paddingBottom = 2,
+                    paddingLeft = 10,
+                    paddingRight = 10,
+                    marginBottom = 5,
+                    borderTopLeftRadius =10,
+                    borderTopRightRadius =10,
+                    borderBottomLeftRadius =10,
+                    borderBottomRightRadius =10,
+                    whiteSpace = WhiteSpace.Normal
+                }
+            };
+
+            // Add a Label to the message panel
+            var abilityLabel = new Label(ability)
+            {
+                style =
+                {
+                    fontSize = 12,
+                    color = Color.white
+                }
+            };
+            abilityPanel.Add(abilityLabel);
+
+            // Add hover effects
+            abilityPanel.RegisterCallback<MouseEnterEvent>(evt =>
+            {
+                abilityPanel.style.backgroundColor = new Color(0.4f, 0.4f, 0.4f, 0.9f); // Darker background on hover
+            });
+
+            abilityPanel.RegisterCallback<MouseLeaveEvent>(evt =>
+            {
+                abilityPanel.style.backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.8f); // Revert background color
+            });
+            
+            abilitiesContainer.Add(abilityPanel);
+        }
+    }
 }

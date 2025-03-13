@@ -45,12 +45,6 @@ public class PokemonAPIManager : MonoBehaviour
         }
     }
 
-    // private IEnumerator ClearMessage()
-    // {
-    //     yield return new WaitForSeconds(4);
-    //     _infoPanelManager.AddMessage("");
-    // }
-
     private void ProcessPokemonData(string jsonData, int id)
     {
         PokemonAPIResponse pokemonResponse = JsonUtility.FromJson<PokemonAPIResponse>(jsonData);
@@ -125,6 +119,36 @@ public class PokemonAPIManager : MonoBehaviour
         //     tmp += ", ";
         // }
         // Debug.Log(tmp);            
+    }
+
+    public string[] GetMovesByName(string pokemonName)
+    {
+        PokemonData pokemon = pokemonDataList.Find(p => p.pokemonName == pokemonName);
+
+        if (pokemon != null)
+        {
+            return pokemon.moves;
+        }
+        else
+        {
+            Debug.LogError($"Pokemon with name '{pokemonName}' not found!");
+            return new string[0]; 
+        }
+    }
+
+    public string[] GetAbilitiesByName(string pokemonName)
+    {
+        PokemonData pokemon = pokemonDataList.Find(p => p.pokemonName == pokemonName);
+
+        if (pokemon != null)
+        {
+            return pokemon.abilities;
+        }
+        else
+        {
+            Debug.LogError($"Pokemon with name '{pokemonName}' not found!");
+            return new string[0]; 
+        }
     }
 
     public void PutEggInScene(int id, Vector3 spawnPosition)
