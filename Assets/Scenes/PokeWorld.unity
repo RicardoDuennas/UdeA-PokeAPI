@@ -2351,6 +2351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pokeAPIManager: {fileID: 2137580701}
+  infoSideBar: {fileID: 1835472795}
   walkSpeed: 6
   gravity: -7.5
 --- !u!54 &1394943543

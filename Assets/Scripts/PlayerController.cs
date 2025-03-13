@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     private CharacterController controller;
     [SerializeField] private PokemonAPIManager pokeAPIManager;
+    [SerializeField] private InfoSideBarManager infoSideBar;
 
     [Header("Movement Settings")]
     [SerializeField] private float walkSpeed = 5f;
@@ -58,7 +59,8 @@ public class PlayerController : MonoBehaviour
             
             PokemonObject pokemonObject = hit.gameObject.GetComponent<PokemonObject>();
             PokemonPool.Instance.ReleasePokemon(pokemonObject);
-            pokeAPIManager.AddPokemonById(id);
+            string name = pokeAPIManager.AddPokemonById(id);
+            infoSideBar.AddPokemonToList(name);
             // Debug.Log("Pokemon Released: " + id);
         }   
     }

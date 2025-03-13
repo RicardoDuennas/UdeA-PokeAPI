@@ -104,9 +104,10 @@ public class PokemonAPIManager : MonoBehaviour
         // Debug.Log("\n\n");
     }
 
-    public void AddPokemonById(int id){
+    public string AddPokemonById(int id){
         inventory.AddPokemon(pokemonDataList[id]);
         _infoPanelManager.AddMessage($"You caught: \n{pokemonDataList[id].pokemonName}");
+        return pokemonDataList[id].pokemonName;
         // StartCoroutine(ClearMessage());
  
         // Debug.Log("id: " + pokemonDataList[id].id);            

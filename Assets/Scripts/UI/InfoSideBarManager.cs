@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections;
 
-public class SidebarController : MonoBehaviour
+public class InfoSideBarManager : MonoBehaviour
 {
     private UIDocument uiDocument;
     private VisualElement sidebarPanel;
@@ -48,7 +48,7 @@ public class SidebarController : MonoBehaviour
         sidebarPanel.style.opacity = 0;
         cardsPanel.style.display = DisplayStyle.None;
         pokemonListPanel.style.display = DisplayStyle.Flex;
-        PopulatePokemonList();
+        // PopulatePokemonList();
     }
     
     private void OnOpenCloseBtnClick(ClickEvent evt)
@@ -169,5 +169,82 @@ public class SidebarController : MonoBehaviour
             // Add the message panel to the container
             _listContainer.Add(messagePanel);
         }
+    }    
+    
+    public void AddPokemonToList(string pokemonName)
+    {
+
+        // Create a new message panel
+        var messagePanel = new VisualElement
+        {
+            style =
+            {
+                backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.8f),
+                paddingTop = 5,
+                paddingBottom = 5,
+                paddingLeft = 10,
+                paddingRight = 10,
+                marginBottom = 5,
+                borderBottomWidth = 2,
+                borderRightWidth = 2,
+                borderLeftWidth = 2,
+                borderTopWidth = 2,
+                borderTopLeftRadius =10,
+                borderTopRightRadius =10,
+                borderBottomLeftRadius =10,
+                borderBottomRightRadius =10,
+                borderTopColor = Color.gray,
+                borderBottomColor = Color.gray,
+                borderLeftColor = Color.gray,
+                borderRightColor = Color.gray,
+                whiteSpace = WhiteSpace.Normal
+            }
+        };
+        var messageLabel = new Label(pokemonName)
+        {
+            style =
+            {
+                fontSize = 12,
+                color = Color.white,
+                unityTextAlign = TextAnchor.MiddleLeft
+            }
+        };
+
+        messagePanel.RegisterCallback<MouseEnterEvent>(evt =>
+        {
+            messagePanel.style.backgroundColor = new Color(0.4f, 0.4f, 0.4f, 0.9f);
+        });
+
+        messagePanel.RegisterCallback<MouseLeaveEvent>(evt =>
+        {
+            messagePanel.style.backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.8f);
+        });
+
+        messagePanel.Add(messageLabel);
+        _listContainer.contentContainer.Add(messagePanel);
+
+        // Register a click event handler for the message panel
+        messagePanel.RegisterCallback<ClickEvent>(OnMessagePanelClicked);
+
+        _listContainer.Add(messagePanel);
     }
+
+    private void OnMessagePanelClicked(ClickEvent evt)
+    {
+        // Get the clicked message panel
+        var clickedPanel = evt.target as VisualElement;
+
+        // Get the Pokemon name from the Label inside the panel
+        var pokemonNameLabel = clickedPanel.Q<Label>();
+        if (pokemonNameLabel != null)
+        {
+            string pokemonName = pokemonNameLabel.text;
+            Debug.Log($"Clicked on Pokemon: {pokemonName}");
+
+            // Add your custom logic here, e.g., display details, highlight the panel, etc.
+            //clickedPanel.style.backgroundColor = new Color(0.2f, 0.2f, 0.2f, 0.9f); // Example: Change background color on click
+        }
+    }
+
+    
 }
