@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     [Header("Input")]
     private Vector2 moveInput;
 
+    private bool isPaused = false;
+
     // Methods to enable and disable input system accordingly
     private void OnEnable()
     {
@@ -32,8 +34,9 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();    
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        // Keep the cursor visible so it is possible to interact with the sidebar
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
 
     void FixedUpdate()
@@ -91,5 +94,28 @@ public class PlayerController : MonoBehaviour
 
         Vector3 rot = Vector3.up * Time.deltaTime * 30f * rotateDirection;
         this.transform.Rotate(rot);    
+    }
+
+    public void PauseGame()
+    {
+        isPaused = true;
+        playerInputActions.Player_Map.Disable();
+        // Cursor.lockState = CursorLockMode.None;
+        // Cursor.visible = true;
+        Time.timeScale = 0f;
+    }
+
+    public void ResumeGame()
+    {
+        isPaused = false;
+        playerInputActions.Player_Map.Enable();
+        // Cursor.lockState = CursorLockMode.Locked;
+        // Cursor.visible = false;
+        Time.timeScale = 1f;
+    }
+
+    public bool IsGamePaused()
+    {
+        return isPaused;
     }
 }
