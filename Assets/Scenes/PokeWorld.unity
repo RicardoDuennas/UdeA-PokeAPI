@@ -1080,7 +1080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35be14828f8e45847a6e2f1c509ea6e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pokemonGO: {fileID: -6460038326893229271, guid: 3ee87fcff09c8ae49aff2aabeeed05de,
+  pokemonGO: {fileID: 5535986097298186915, guid: 04226a009e35d6d4487c40a6cf097f6a,
     type: 3}
   pokemonContainer: {fileID: 2077988918}
   poolDefaultCapacity: 3
@@ -3051,7 +3051,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1884227852}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 42, y: 2, z: 81}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3202,4 +3202,3 @@ MonoBehaviour:
   numberOfPokemons: 20
   pokemonDataList: []
   pokePool: {fileID: 431659932}
-  fetchedPokemons: 0

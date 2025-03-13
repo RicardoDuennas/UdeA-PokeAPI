@@ -45,11 +45,11 @@ public class PokemonAPIManager : MonoBehaviour
         }
     }
 
-    private IEnumerator ClearMessage()
-    {
-        yield return new WaitForSeconds(4);
-        _infoPanelManager.UpdateMessage("");
-    }
+    // private IEnumerator ClearMessage()
+    // {
+    //     yield return new WaitForSeconds(4);
+    //     _infoPanelManager.AddMessage("");
+    // }
 
     private void ProcessPokemonData(string jsonData, int id)
     {
@@ -81,15 +81,15 @@ public class PokemonAPIManager : MonoBehaviour
         }
 
         Vector3 spawnPosition = new Vector3(
-            Random.Range(-80f, 80f), 
-            1.5f, 
-            Random.Range(-80f, 80f)
+            Random.Range(-40f, 40f), 
+            3f, 
+            Random.Range(-40f, 40f)
         );
 
         pokemonData.position = spawnPosition;
         PutEggInScene(id, spawnPosition);
-        _infoPanelManager.UpdateMessage($"Pokemon added to the scene: \n{pokemonData.pokemonName}");
-        StartCoroutine(ClearMessage());
+        _infoPanelManager.AddMessage($"Pokemon added to the scene: \n{pokemonData.pokemonName}");
+        // StartCoroutine(ClearMessage());
         pokemonDataList.Add(pokemonData);
 
         // // Check quantity of abilities and moves of every Pokemon
@@ -106,8 +106,8 @@ public class PokemonAPIManager : MonoBehaviour
 
     public void AddPokemonById(int id){
         inventory.AddPokemon(pokemonDataList[id]);
-        _infoPanelManager.UpdateMessage($"You caught: \n{pokemonDataList[id].pokemonName}");
-        StartCoroutine(ClearMessage());
+        _infoPanelManager.AddMessage($"You caught: \n{pokemonDataList[id].pokemonName}");
+        // StartCoroutine(ClearMessage());
  
         // Debug.Log("id: " + pokemonDataList[id].id);            
         // Debug.Log("name: " + pokemonDataList[id].pokemonName);            
