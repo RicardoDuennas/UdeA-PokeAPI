@@ -54,6 +54,7 @@ public class PokemonPool : MonoBehaviour
             
             pokemonObject.tag = "Pokemon";
             pokemonObject.name = "Pokemon" + i;
+            pokemonObject.id = i;
             pokemonObject.transform.position = spawnPosition;
             // Log Pokemon Egg spawn position
             //Debug.Log("spawnPosition " + pokemonObject.transform.position);

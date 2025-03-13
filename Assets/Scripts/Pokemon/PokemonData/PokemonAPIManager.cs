@@ -11,11 +11,14 @@ public class PokemonAPIManager : MonoBehaviour
 
     [SerializeField] private int numberOfPokemons = 20;   
     [SerializeField] private List<PokemonData> pokemonDataList = new List<PokemonData>();
+    [SerializeField] private PokemonInventory inventory;
+    public bool fetchedPokemons = false;
 
     private void Start()
     {
 
         StartCoroutine(FetchPokemonData());
+        inventory = new PokemonInventory();
     }
     
     private IEnumerator FetchPokemonData()
@@ -35,18 +38,20 @@ public class PokemonAPIManager : MonoBehaviour
                 }
                 else
                 {
-                    ProcessPokemonData(webRequest.downloadHandler.text);
+                    ProcessPokemonData(webRequest.downloadHandler.text, i);
                 }
             }
         }
+        fetchedPokemons = true;
     }
 
-    private void ProcessPokemonData(string jsonData)
+    private void ProcessPokemonData(string jsonData, int id)
     {
         PokemonAPIResponse pokemonResponse = JsonUtility.FromJson<PokemonAPIResponse>(jsonData);
 
         PokemonData pokemonData = ScriptableObject.CreateInstance<PokemonData>();
-        pokemonData.id = pokemonResponse.id;
+        pokemonData.id = id;
+        pokemonData.pokemonID = pokemonResponse.id;
         pokemonData.pokemonName = pokemonResponse.name;
 
         // Get the first type (you can modify this to get all types if needed)
@@ -73,12 +78,34 @@ public class PokemonAPIManager : MonoBehaviour
 
         // Check quantity of abilities and moves of every Pokemon
         Debug.Log($"Processed Pokemon: {pokemonData.pokemonName}");
-        Debug.Log($"ID: {pokemonData.id}");
+        Debug.Log($"id: {pokemonData.id}");
+        Debug.Log($"pokemonID: {pokemonData.pokemonID}");
         Debug.Log($"Type: {pokemonData.type}");
-        Debug.Log($"Abilities: {pokemonData.abilities.Length}");
-        Debug.Log($"Moves: {pokemonData.moves.Length}");
+        // Debug.Log($"Abilities: {pokemonData.abilities.Length}");
+        // Debug.Log($"Moves: {pokemonData.moves.Length}");
         Debug.Log("------------------------------");
         Debug.Log("\n\n");
+    }
+
+    public void AddPokemonById(int id){
+        inventory.AddPokemon(pokemonDataList[id]);
+ 
+
+        // Debug.Log("id: " + pokemonDataList[id].id);            
+        // Debug.Log("name: " + pokemonDataList[id].pokemonName);            
+        // Debug.Log("type: " + pokemonDataList[id].type);            
+        // Debug.Log("pokemonID: " + pokemonDataList[id].pokemonID);            
+        // Debug.Log("------------------------------");
+        // Debug.Log("\n\n");
+
+        string tmp = "";
+
+        for (int i = 0; i < inventory.GetCount(); i++)
+        {
+            tmp += pokemonDataList[i].pokemonName;
+            tmp += ", ";
+        }
+        Debug.Log(tmp);            
     }
 
     [System.Serializable]

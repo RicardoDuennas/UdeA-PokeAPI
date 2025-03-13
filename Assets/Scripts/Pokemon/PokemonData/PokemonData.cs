@@ -4,6 +4,7 @@ using UnityEngine;
 public class PokemonData : ScriptableObject
 {
     public int id;
+    public int pokemonID;
     public string pokemonName;
     public string type;
     public string[] abilities;

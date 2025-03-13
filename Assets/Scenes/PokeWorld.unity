@@ -2350,6 +2350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1cf958693e699a4aaf88dced856b828, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pokeAPIManager: {fileID: 2137580701}
   walkSpeed: 6
   gravity: -7.5
 --- !u!54 &1394943543
@@ -2415,7 +2416,7 @@ Transform:
   m_Children:
   - {fileID: 1835472793}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1455204143
 PrefabInstance:
@@ -2466,79 +2467,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c19e7fac9429a743b3a44dab80d5829, type: 3}
---- !u!1001 &1477452687
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1559548811974765986, guid: 3ee87fcff09c8ae49aff2aabeeed05de,
-        type: 3}
-      propertyPath: m_Name
-      value: egg3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2229125466543044376, guid: 3ee87fcff09c8ae49aff2aabeeed05de,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2229125466543044376, guid: 3ee87fcff09c8ae49aff2aabeeed05de,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2229125466543044376, guid: 3ee87fcff09c8ae49aff2aabeeed05de,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.584
-      objectReference: {fileID: 0}
-    - target: {fileID: 2229125466543044376, guid: 3ee87fcff09c8ae49aff2aabeeed05de,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2229125466543044376, guid: 3ee87fcff09c8ae49aff2aabeeed05de,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2229125466543044376, guid: 3ee87fcff09c8ae49aff2aabeeed05de,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2229125466543044376, guid: 3ee87fcff09c8ae49aff2aabeeed05de,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2229125466543044376, guid: 3ee87fcff09c8ae49aff2aabeeed05de,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2229125466543044376, guid: 3ee87fcff09c8ae49aff2aabeeed05de,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2229125466543044376, guid: 3ee87fcff09c8ae49aff2aabeeed05de,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2229125466543044376, guid: 3ee87fcff09c8ae49aff2aabeeed05de,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3ee87fcff09c8ae49aff2aabeeed05de, type: 3}
 --- !u!4 &1483854560 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4419413963564962, guid: 4c19e7fac9429a743b3a44dab80d5829,
@@ -3253,9 +3181,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2137580698}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ec3513125400d549a3ca4ae300d480c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pokemonLimit: 100000
+  numberOfPokemons: 20
+  pokemonDataList: []
+  fetchedPokemons: 0

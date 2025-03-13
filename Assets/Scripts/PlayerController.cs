@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("References")]
     private CharacterController controller;
+    [SerializeField] private PokemonAPIManager pokeAPIManager;
 
     [Header("Movement Settings")]
     [SerializeField] private float walkSpeed = 5f;
@@ -33,7 +34,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        controller = GetComponent<CharacterController>();    
+        controller = GetComponent<CharacterController>();        
         // Keep the cursor visible so it is possible to interact with the sidebar
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
@@ -48,18 +49,17 @@ public class PlayerController : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit) 
     {
-
-        // Get the name and tag of the collided object
-        string objectName = hit.gameObject.name;
         string objectTag = hit.gameObject.tag;
-           
+        
         if (objectTag == "Pokemon")
         {
-            // Check the name of the Pokemon Egg collided
+            string objectName = hit.gameObject.name;
+            int id = hit.gameObject.GetComponent<PokemonObject>().id;
+            
             PokemonObject pokemonObject = hit.gameObject.GetComponent<PokemonObject>();
             PokemonPool.Instance.ReleasePokemon(pokemonObject);
-            // Log the name of the Pokemon Egg collided
-            Debug.Log("Pokemon Released: " + objectName);
+            pokeAPIManager.AddPokemonById(id);
+            Debug.Log("Pokemon Released: " + id);
         }   
     }
 
