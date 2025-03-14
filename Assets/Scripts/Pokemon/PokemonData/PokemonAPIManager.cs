@@ -10,7 +10,7 @@ public class PokemonAPIManager : MonoBehaviour
 {
 
     [SerializeField] private int numberOfPokemons = 20;   
-    [SerializeField] private List<PokemonData> pokemonDataList = new List<PokemonData>();
+    [SerializeField] public List<PokemonData> pokemonDataList = new List<PokemonData>();
     [SerializeField] private PokemonInventory inventory;
     [SerializeField] private PokemonPool pokePool;
     private InfoPanelManager _infoPanelManager;
@@ -89,40 +89,12 @@ public class PokemonAPIManager : MonoBehaviour
         _infoPanelManager.AddMessage($"Pokémon adicionado a la escena: \n{pokemonData.pokemonName}");
         
         pokemonDataList.Add(pokemonData);
-
-        // // Check quantity of abilities and moves of every Pokemon
-        // Debug.Log($"Processed Pokemon: {pokemonData.pokemonName}");
-        // Debug.Log($"id: {pokemonData.id}");
-        // Debug.Log($"position: {pokemonData.position}");
-        // Debug.Log($"pokemonID: {pokemonData.pokemonID}");
-        // Debug.Log($"Type: {pokemonData.type}");
-        // Debug.Log($"Abilities: {pokemonData.abilities.Length}");
-        // Debug.Log($"Moves: {pokemonData.moves.Length}");
-        // Debug.Log("------------------------------");
-        // Debug.Log("\n\n");
     }
 
     public string AddPokemonById(int id){
         inventory.AddPokemon(pokemonDataList[id]);
         _infoPanelManager.AddMessage($"Capturaste un Pokémon: \n{pokemonDataList[id].pokemonName}");
         return pokemonDataList[id].pokemonName;
-        // StartCoroutine(ClearMessage());
- 
-        // Debug.Log("id: " + pokemonDataList[id].id);            
-        // Debug.Log("name: " + pokemonDataList[id].pokemonName);            
-        // Debug.Log("type: " + pokemonDataList[id].type);            
-        // Debug.Log("pokemonID: " + pokemonDataList[id].pokemonID);            
-        // Debug.Log("------------------------------");
-        // Debug.Log("\n\n");
-
-        // Debug collected Pokemon names inline
-        // string tmp = "";
-        // for (int i = 0; i < inventory.GetCount(); i++)
-        // {
-        //     tmp += pokemonDataList[i].pokemonName;
-        //     tmp += ", ";
-        // }
-        // Debug.Log(tmp);            
     }
 
     public string[] GetMovesByName(string pokemonName)

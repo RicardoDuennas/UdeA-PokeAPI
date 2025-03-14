@@ -11,6 +11,8 @@ public class WelcomePanelController : MonoBehaviour
     private VisualElement _welcomePanel;
     [SerializeField] InfoSideBarManager _infoSideBar;
     [SerializeField] private GameManager gameManager;
+    private InfoPanelManager _infoPanelManager;
+
 
     private void OnEnable()
     {
@@ -29,6 +31,8 @@ public class WelcomePanelController : MonoBehaviour
     }
 
     private void Start() {
+        _infoPanelManager = FindObjectOfType<InfoPanelManager>();
+
         if (!gameManager.FileExist()) 
         {
             _loadJSONButton.style.display = DisplayStyle.None;
@@ -46,7 +50,17 @@ public class WelcomePanelController : MonoBehaviour
 
     private void OnLoadJSONClicked()
     {
-
+        // Trigger the transition
+        _welcomePanel.style.opacity = 0;
+        _welcomePanel.style.scale = new Scale(new Vector2(0.5f, 0.5f));
+        _infoSideBar.showUI();
+        // Disable the panel after the transition
+        _welcomePanel.schedule.Execute(() =>
+        {
+            _welcomePanel.style.display = DisplayStyle.None;
+            _welcomePanel.RemoveFromHierarchy();
+        }).StartingIn(500); 
+        GameManager.Instance.LoadData();
     }
 
     private void OnFetchPokemonsClicked()
@@ -54,10 +68,11 @@ public class WelcomePanelController : MonoBehaviour
         // Trigger the transition
         _welcomePanel.style.opacity = 0;
         _welcomePanel.style.scale = new Scale(new Vector2(0.5f, 0.5f));
+        _infoSideBar.showUI();
+        _infoPanelManager.AddMessage("Usando API para cargar Pokemones");
         // Disable the panel after the transition
         _welcomePanel.schedule.Execute(() =>
         {
-            _infoSideBar.showUI();
             _welcomePanel.style.display = DisplayStyle.None;
             _welcomePanel.RemoveFromHierarchy();
         }).StartingIn(500); 

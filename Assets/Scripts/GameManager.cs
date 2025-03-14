@@ -46,28 +46,28 @@ public class GameManager : MonoBehaviour
         
     }
 
-    private void LoadData()
+    public void LoadData()
     {
-        //SaveData loadedData = _saveLoadManager.LoadData();
+        SaveData loadedData = _saveLoadManager.LoadData();
 
-        // if (loadedData != null)
-        // {
-        //     // Update the allPokemonData list in PokemonAPIManager
-        //     pokeAPIManager.pokemonDataList = new List<PokemonData>();
-        //     foreach (var pokemon in loadedData.allPokemonData)
-        //     {
-        //         pokeAPIManager.pokemonDataList.Add(pokemon.ToPokemonData());
-        //     }
+        if (loadedData != null)
+        {
+            // Update the allPokemonData list in PokemonAPIManager
+            _pokeAPIManager.pokemonDataList = new List<PokemonData>();
+            foreach (var pokemon in loadedData.allPokemonData)
+            {
+                _pokeAPIManager.pokemonDataList.Add(pokemon.ToPokemonData());
+            }
 
-        //     // Update the collectedPokemon list in PokemonInventory
-        //     pokemonInventory.CollectedPokemon = new List<PokemonData>();
-        //     foreach (var pokemon in loadedData.collectedPokemon)
-        //     {
-        //         pokemonInventory.CollectedPokemon.Add(pokemon.ToPokemonData());
-        //     }
+            // // Update the collectedPokemon list in PokemonInventory
+            // _pokeAPIManager.inventory.CollectedPokemon = new List<PokemonData>();
+            // foreach (var pokemon in loadedData.collectedPokemon)
+            // {
+            //   //  pokemonInventory.CollectedPokemon.Add(pokemon.ToPokemonData());
+            // }
 
-        //     Debug.Log("Data loaded successfully!");
-        // }
+            Debug.Log("Data loaded successfully!");
+        }
     }
 
     public bool FileExist()
