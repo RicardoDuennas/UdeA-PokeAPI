@@ -34,11 +34,9 @@ public class PokemonPool : MonoBehaviour
 
     void Start()
     {
-        // SpawnEggs(20);
     }
 
-    // Method to spawn the first eggs
-    public void SpawnEggs(int id, Vector3 spawnPosition)
+    public void SpawnPokemons(int id, Vector3 spawnPosition)
     {
         var pokemonObject = pokePool.Get();
         

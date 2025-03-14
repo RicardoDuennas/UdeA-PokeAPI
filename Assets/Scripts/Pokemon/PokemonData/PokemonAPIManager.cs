@@ -81,9 +81,9 @@ public class PokemonAPIManager : MonoBehaviour
         );
 
         pokemonData.position = spawnPosition;
-        PutEggInScene(id, spawnPosition);
+        PutPokemonInScene(id, spawnPosition);
         _infoPanelManager.AddMessage($"Pokemon added to the scene: \n{pokemonData.pokemonName}");
-        // StartCoroutine(ClearMessage());
+        
         pokemonDataList.Add(pokemonData);
 
         // // Check quantity of abilities and moves of every Pokemon
@@ -151,9 +151,19 @@ public class PokemonAPIManager : MonoBehaviour
         }
     }
 
-    public void PutEggInScene(int id, Vector3 spawnPosition)
+    public void PutPokemonInScene(int id, Vector3 spawnPosition)
     {
-        pokePool.SpawnEggs(id, spawnPosition);
+        pokePool.SpawnPokemons(id, spawnPosition);
+    }
+
+    public List<PokemonData> GetPokemonInventory()
+    {
+        return inventory.CollectedPokemon;
+    }
+
+    public List<PokemonData> GetAllPokemonData()
+    {
+        return pokemonDataList;
     }
 
     [System.Serializable]

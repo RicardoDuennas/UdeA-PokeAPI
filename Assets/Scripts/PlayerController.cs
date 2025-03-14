@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     [SerializeField] private PokemonAPIManager pokeAPIManager;
     [SerializeField] private InfoSideBarManager infoSideBar;
+    [SerializeField] private GameManager gameManager;
 
     [Header("Movement Settings")]
     [SerializeField] private float walkSpeed = 5f;
@@ -61,6 +62,7 @@ public class PlayerController : MonoBehaviour
             PokemonPool.Instance.ReleasePokemon(pokemonObject);
             string name = pokeAPIManager.AddPokemonById(id);
             infoSideBar.AddPokemonToList(name);
+            gameManager.SaveData();
             // Debug.Log("Pokemon Released: " + id);
         }   
     }
