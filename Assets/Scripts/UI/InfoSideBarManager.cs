@@ -50,8 +50,9 @@ public class InfoSideBarManager : MonoBehaviour
         // Set initial width to closed state and transparent
         _sidebarPanel.style.width = new StyleLength(new Length(0f, LengthUnit.Percent));
         _sidebarPanel.style.opacity = 0;
+        _sidebarPanel.style.display = DisplayStyle.None;
         _cardPanel.style.display = DisplayStyle.None;
-        _pokemonListPanel.style.display = DisplayStyle.Flex;
+        _pokemonListPanel.style.display = DisplayStyle.None;
         // PopulatePokemonList();
     }
     
@@ -124,6 +125,12 @@ public class InfoSideBarManager : MonoBehaviour
             StopCoroutine(animationCoroutine);
             animationCoroutine = null;
         }
+    }
+
+    public void showUI()
+    {
+        _sidebarPanel.style.display = DisplayStyle.Flex;
+        _pokemonListPanel.style.display = DisplayStyle.Flex;
     }
 
     public void PopulatePokemonList()

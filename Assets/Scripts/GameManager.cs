@@ -4,15 +4,33 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
+
     private PokemonAPIManager _pokeAPIManager;
     private SaveLoadManager _saveLoadManager;
 
+    private void Awake() 
+    { 
+        
+        if (Instance != null && Instance != this) 
+        { 
+            Destroy(this); 
+        } 
+        else 
+        { 
+            Instance = this; 
+        } 
+    }
 
     private void Start() {
 
-         _pokeAPIManager = FindObjectOfType<PokemonAPIManager>();
-         _saveLoadManager = new SaveLoadManager();
-         _pokeAPIManager.StartFetchRoutine();
+        _pokeAPIManager = FindObjectOfType<PokemonAPIManager>();
+        _saveLoadManager = new SaveLoadManager();
+    }
+
+    public void StartGame()
+    {
+        _pokeAPIManager.StartFetchRoutine();
     }
 
     public void SendDataToSave()
