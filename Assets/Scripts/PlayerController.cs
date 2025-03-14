@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
 
     private bool isPaused = false;
+    public AudioSource audioSource;
 
     // Methods to enable and disable input system accordingly
     private void OnEnable()
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();        
+        audioSource = GetComponent<AudioSource>();
     }
 
     void FixedUpdate()
@@ -59,6 +61,7 @@ public class PlayerController : MonoBehaviour
             string name = _pokeAPIManager.AddPokemonById(id);
             _infoSideBar.AddPokemonToList(name);
             GameManager.Instance.SendDataToSave();
+            audioSource.Play();
         }   
     }
 
