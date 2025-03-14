@@ -10,7 +10,6 @@ public class WelcomePanelController : MonoBehaviour
     private Button _fetchPokemonsButton;
     private VisualElement _welcomePanel;
     [SerializeField] InfoSideBarManager _infoSideBar;
-    [SerializeField] private GameManager gameManager;
     private InfoPanelManager _infoPanelManager;
 
 
@@ -33,7 +32,7 @@ public class WelcomePanelController : MonoBehaviour
     private void Start() {
         _infoPanelManager = FindObjectOfType<InfoPanelManager>();
 
-        if (!gameManager.FileExist()) 
+        if (!GameManager.Instance.FileExist()) 
         {
             _loadJSONButton.style.display = DisplayStyle.None;
             _jsonMessage.style.display = DisplayStyle.None;

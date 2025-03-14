@@ -6,11 +6,11 @@ using UnityEngine.Pool;
 public class PokemonPool : MonoBehaviour
 {
 
-    [SerializeField] private PokemonObject pokemonGO; // Shorthand for Pokemon GameObject
-    [SerializeField] private GameObject pokemonContainer; 
-    [SerializeField] private int poolDefaultCapacity = 20;
-    [SerializeField] private int poolMaxCapacity = 25;
-    private ObjectPool<PokemonObject> pokePool;
+    [SerializeField] private PokemonObject _pokemonGO; // Shorthand for Pokemon GameObject
+    [SerializeField] private GameObject _pokemonContainer; 
+    [SerializeField] private int _poolDefaultCapacity = 20;
+    [SerializeField] private int _poolMaxCapacity = 25;
+    private ObjectPool<PokemonObject> _pokePool;
     public static PokemonPool Instance { get; private set; }
 
     private void Awake() 
@@ -21,14 +21,14 @@ public class PokemonPool : MonoBehaviour
         else
             Destroy(gameObject);
 
-        pokePool = new ObjectPool<PokemonObject>(
+        _pokePool = new ObjectPool<PokemonObject>(
             createFunc: CreatePokemon,
             actionOnGet: OnPokemonGet,
             actionOnRelease: OnPokemonRelease,
             actionOnDestroy: OnPokemonDestroy,
             collectionCheck: true,
-            defaultCapacity: poolDefaultCapacity,
-            maxSize: poolMaxCapacity
+            defaultCapacity: _poolDefaultCapacity,
+            maxSize: _poolMaxCapacity
         );    
     }
 
@@ -38,23 +38,23 @@ public class PokemonPool : MonoBehaviour
 
     public void SpawnPokemons(int id, Vector3 spawnPosition)
     {
-        var pokemonObject = pokePool.Get();
+        var pokemonObject = _pokePool.Get();
         
         pokemonObject.tag = "Pokemon";
         pokemonObject.id = id;
         pokemonObject.transform.position = spawnPosition;
-        pokemonObject.transform.parent = pokemonContainer.transform;
+        pokemonObject.transform.parent = _pokemonContainer.transform;
     }
 
     private IEnumerator ReturnToPoolAfterDelay(PokemonObject pokemon, float delay)
     {
         yield return new WaitForSeconds(delay);
-        pokePool.Release(pokemon);
+        _pokePool.Release(pokemon);
     }
 
     private PokemonObject CreatePokemon()
     {
-        PokemonObject pokemonObj = Instantiate(pokemonGO);        
+        PokemonObject pokemonObj = Instantiate(_pokemonGO);        
         return pokemonObj;
     }
 
@@ -76,7 +76,7 @@ public class PokemonPool : MonoBehaviour
     //Eliminate Pokemon Egg from scene when collected
     public void ReleasePokemon(PokemonObject pokemon)
     {
-        pokePool.Release(pokemon);
+        _pokePool.Release(pokemon);
     }
 
 }

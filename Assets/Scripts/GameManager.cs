@@ -82,6 +82,11 @@ public class GameManager : MonoBehaviour
             }
             _infoPanelManager.AddMessage("¡Datos cargados correctamente!");
             //Debug.Log("Data loaded successfully!");
+
+            if (_pokeAPIManager.inventory.GetCount() == 20)
+            {
+                _infoPanelManager.AddMessage("Ya capturaste todos los Pokémones.\nInicia nuevamente.");
+        }
         }
 
         

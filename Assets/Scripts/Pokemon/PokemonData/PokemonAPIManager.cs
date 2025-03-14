@@ -12,7 +12,7 @@ public class PokemonAPIManager : MonoBehaviour
     [SerializeField] private int _numberOfPokemons = 20;   
     [SerializeField] public List<PokemonData> pokemonDataList = new List<PokemonData>();
     [SerializeField] public PokemonInventory inventory;
-    [SerializeField] private PokemonPool pokePool;
+    [SerializeField] private PokemonPool _pokePool;
     private InfoPanelManager _infoPanelManager;
 
     private void Start()
@@ -101,7 +101,11 @@ public class PokemonAPIManager : MonoBehaviour
 
     public string AddPokemonById(int id){
         inventory.AddPokemon(pokemonDataList[id]);
-        _infoPanelManager.AddMessage($"Capturaste un Pokémon: \n{pokemonDataList[id].pokemonName}");
+        _infoPanelManager.AddMessage($"Capturaste un Pokémon:\n{pokemonDataList[id].pokemonName}.\nHas capturado: {inventory.GetCount()}");
+        if (inventory.GetCount() == 20)
+        {
+            _infoPanelManager.AddMessage("¡Felicitaciones! \nCapturaste todos los Pokémones.");
+        }
         return pokemonDataList[id].pokemonName;
     }
 
@@ -137,7 +141,7 @@ public class PokemonAPIManager : MonoBehaviour
 
     public void PutPokemonInScene(int id, Vector3 spawnPosition)
     {
-        pokePool.SpawnPokemons(id, spawnPosition);
+        _pokePool.SpawnPokemons(id, spawnPosition);
     }
 
     public List<PokemonData> GetPokemonInventory()

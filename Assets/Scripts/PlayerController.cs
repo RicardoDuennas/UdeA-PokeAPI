@@ -6,14 +6,13 @@ public class PlayerController : MonoBehaviour
 {
     [Header("References")]
     private CharacterController controller;
-    [SerializeField] private PokemonAPIManager pokeAPIManager;
-    [SerializeField] private InfoSideBarManager infoSideBar;
-    [SerializeField] private GameManager gameManager;
+    [SerializeField] private PokemonAPIManager _pokeAPIManager;
+    [SerializeField] private InfoSideBarManager _infoSideBar;
 
     [Header("Movement Settings")]
-    [SerializeField] private float walkSpeed = 5f;
-    private PlayerInputActions playerInputActions;
-    [SerializeField]  private float gravity = -3.5f;
+    [SerializeField] private float _walkSpeed = 5f;
+    private PlayerInputActions _playerInputActions;
+    [SerializeField]  private float _gravity = -3.5f;
 
     [Header("Input")]
     private Vector2 moveInput;
@@ -23,15 +22,15 @@ public class PlayerController : MonoBehaviour
     // Methods to enable and disable input system accordingly
     private void OnEnable()
     {
-        playerInputActions.Player_Map.Enable();
+        _playerInputActions.Player_Map.Enable();
     }
     private void OnDisable()
     {
-        playerInputActions.Player_Map.Disable();
+        _playerInputActions.Player_Map.Disable();
     }
 
     void Awake(){
-        playerInputActions = new PlayerInputActions();
+        _playerInputActions = new PlayerInputActions();
     }
 
     void Start()
@@ -57,15 +56,15 @@ public class PlayerController : MonoBehaviour
             
             PokemonObject pokemonObject = hit.gameObject.GetComponent<PokemonObject>();
             PokemonPool.Instance.ReleasePokemon(pokemonObject);
-            string name = pokeAPIManager.AddPokemonById(id);
-            infoSideBar.AddPokemonToList(name);
-            gameManager.SendDataToSave();
+            string name = _pokeAPIManager.AddPokemonById(id);
+            _infoSideBar.AddPokemonToList(name);
+            GameManager.Instance.SendDataToSave();
         }   
     }
 
     private void InputManagement()
     {
-        moveInput = playerInputActions.Player_Map.Move.ReadValue<Vector2>();
+        moveInput = _playerInputActions.Player_Map.Move.ReadValue<Vector2>();
     }
 
     private void PlayerMovement()
@@ -75,12 +74,12 @@ public class PlayerController : MonoBehaviour
         Vector3 tempRot = this.transform.eulerAngles;
         Vector3 move =  Quaternion.Euler(0, tempRot.y, 0)
             * new Vector3(0, 0, moveInput.y)
-            * walkSpeed * Time.deltaTime;
+            * _walkSpeed * Time.deltaTime;
         
         // Apply gravity
         if (!controller.isGrounded)
         {
-            move += new Vector3(0, gravity, 0);
+            move += new Vector3(0, _gravity, 0);
         }
 
         // Move controller
@@ -90,7 +89,7 @@ public class PlayerController : MonoBehaviour
     {
 
         // Apply player's rotation according to the mouse input 
-        var rotateDirection = playerInputActions.Player_Map.Rotate.ReadValue<float>();
+        var rotateDirection = _playerInputActions.Player_Map.Rotate.ReadValue<float>();
 
         Vector3 rot = Vector3.up * Time.deltaTime * 30f * rotateDirection;
         this.transform.Rotate(rot);    
@@ -99,7 +98,7 @@ public class PlayerController : MonoBehaviour
     public void PauseGame()
     {
         isPaused = true;
-        playerInputActions.Player_Map.Disable();
+        _playerInputActions.Player_Map.Disable();
         // Cursor.lockState = CursorLockMode.None;
         // Cursor.visible = true;
         Time.timeScale = 0f;
@@ -108,7 +107,7 @@ public class PlayerController : MonoBehaviour
     public void ResumeGame()
     {
         isPaused = false;
-        playerInputActions.Player_Map.Enable();
+        _playerInputActions.Player_Map.Enable();
         // Cursor.lockState = CursorLockMode.Locked;
         // Cursor.visible = false;
         Time.timeScale = 1f;
