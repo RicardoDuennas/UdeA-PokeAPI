@@ -244,10 +244,6 @@ public class InfoSideBarManager : MonoBehaviour
         {
             string pokemonName = pokemonNameLabel.text;
             ShowCard(pokemonName);
-            Debug.Log($"Clicked on Pokemon: {pokemonName}");
-
-            // Add your custom logic here, e.g., display details, highlight the panel, etc.
-            //clickedPanel.style.backgroundColor = new Color(0.2f, 0.2f, 0.2f, 0.9f); // Example: Change background color on click
         }
     }
 

@@ -5,39 +5,26 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private PokemonAPIManager _pokeAPIManager;
-    private PokemonInventory _pokemonInventory;
     private SaveLoadManager _saveLoadManager;
 
-    private void Awake()
-    {
-        _pokeAPIManager = FindObjectOfType<PokemonAPIManager>();
-        //_saveLoadManager = FindObjectOfType<SaveLoadManager>();
-    }
 
     private void Start() {
 
-        _saveLoadManager = new SaveLoadManager();
-        //_saveLoadManager = new SaveLoadManager();
-
-        // Example: Save data
-        // SaveData();
-
-        // Example: Load data
-        // LoadData();
+         _pokeAPIManager = FindObjectOfType<PokemonAPIManager>();
+         _saveLoadManager = new SaveLoadManager();
+         _pokeAPIManager.StartFetchRoutine();
     }
 
-    public void SaveData()
+    public void SendDataToSave()
     {
         // Get allPokemonData from PokemonAPIManager
         List<PokemonData> allPokemonData = _pokeAPIManager.GetAllPokemonData();
-        // Convert List<PokemonData> to PokemonData[] for saving
-        PokemonData[] allPokemonDataArray = allPokemonData.ToArray();
 
         // Get collectedPokemon from PokemonInventory
         List<PokemonData> collectedPokemon = _pokeAPIManager.GetPokemonInventory();
 
-        // // Save the data
-        _saveLoadManager.SaveData(allPokemonDataArray, collectedPokemon);
+        // Save the data
+        _saveLoadManager.SaveData(allPokemonData, collectedPokemon);
         
     }
 

@@ -5,24 +5,25 @@ using UnityEngine;
 
 public class SaveLoadManager
 {
-    private string savePath;
+    private string _savePath;
 
     public SaveLoadManager()
     {
         // Define the save file path
-        savePath = Path.Combine(Application.persistentDataPath, "pokemonSaveData.json");
-        Debug.Log("savePath: " + savePath);
+        _savePath = Path.Combine(Application.persistentDataPath, "pokemonSaveData.json");
     }
 
-    public void SaveData(PokemonData[] allPokemonData, List<PokemonData> collectedPokemon)
+    public void SaveData(List<PokemonData> allPokemonData, List<PokemonData> collectedPokemon)
     {
-        // Convert PokemonData to SerializablePokemonData
-        SerializablePokemonData[] serializableAllPokemonData = new SerializablePokemonData[allPokemonData.Length];
-        for (int i = 0; i < allPokemonData.Length; i++)
+
+        // Serialize All Pokemon Data
+        List<SerializablePokemonData> serializableAllPokemonData = new List<SerializablePokemonData>();
+        foreach (var pokemon in allPokemonData)
         {
-            serializableAllPokemonData[i] = SerializablePokemonData.FromPokemonData(allPokemonData[i]);
+            serializableAllPokemonData.Add(SerializablePokemonData.FromPokemonData(pokemon));
         }
 
+        // Serialize collected Pokemons
         List<SerializablePokemonData> serializableCollectedPokemon = new List<SerializablePokemonData>();
         foreach (var pokemon in collectedPokemon)
         {
@@ -36,31 +37,27 @@ public class SaveLoadManager
             collectedPokemon = serializableCollectedPokemon
         };
 
-        // Serialize to JSON
-        string json = JsonUtility.ToJson(saveData, true); // Pretty-print JSON for readability
-
-        // Write to file
-        File.WriteAllText(savePath, json);
-
-        Debug.Log("Data saved to: " + savePath);
+        // Serialize to JSON and write to file
+        string json = JsonUtility.ToJson(saveData, true);
+        File.WriteAllText(_savePath, json);
     }
 
     public SaveData LoadData()
     {
-        if (File.Exists(savePath))
+        if (File.Exists(_savePath))
         {
             // Read the JSON file
-            string json = File.ReadAllText(savePath);
+            string json = File.ReadAllText(_savePath);
 
             // Deserialize JSON to SaveData
             SaveData saveData = JsonUtility.FromJson<SaveData>(json);
 
-            Debug.Log("Data loaded from: " + savePath);
+            Debug.Log("Data loaded from: " + _savePath);
             return saveData;
         }
         else
         {
-            Debug.LogWarning("No save file found at: " + savePath);
+            Debug.LogWarning("No save file found at: " + _savePath);
             return null;
         }
     }

@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
             PokemonPool.Instance.ReleasePokemon(pokemonObject);
             string name = pokeAPIManager.AddPokemonById(id);
             infoSideBar.AddPokemonToList(name);
-            gameManager.SaveData();
+            gameManager.SendDataToSave();
             // Debug.Log("Pokemon Released: " + id);
         }   
     }

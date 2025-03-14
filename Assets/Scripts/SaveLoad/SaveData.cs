@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class SaveData
 {
     // Array to store data for 20 Pokémon
-    public SerializablePokemonData[] allPokemonData; 
+    public List<SerializablePokemonData> allPokemonData; 
     // List to store collected Pokémon
     public List<SerializablePokemonData> collectedPokemon; 
 }

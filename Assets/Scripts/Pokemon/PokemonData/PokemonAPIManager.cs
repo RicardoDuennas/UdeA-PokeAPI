@@ -18,10 +18,14 @@ public class PokemonAPIManager : MonoBehaviour
     private void Start()
     {
         _infoPanelManager = FindObjectOfType<InfoPanelManager>();
-        StartCoroutine(FetchPokemonData());
         inventory = new PokemonInventory();
     }
     
+    public void StartFetchRoutine()
+    {
+        StartCoroutine(FetchPokemonData());
+    }
+
     private IEnumerator FetchPokemonData()
     {
         for (int i = 0; i < numberOfPokemons; i++)
