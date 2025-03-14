@@ -12,7 +12,7 @@ Siguiendo las indicaciones de la prueba, se desarrollaron los siguientes sistema
 - Implementación del código para el consumo de la API pokeapi.co, seleccionando la información de 20 Pokémones al azar.
 - Implementación de Object Pool para adiministrar las Pokébolas en la escena.
 - Implementación de un sistema de inventarios para las Pokébolas capturadas, guardando la siguiente información de la API: id, nombre, tipo, habilidades y movimientos de cada Pokémon.
-- Implementación de un sistema de IU por medio de UI Toolkit que muestra: el listado de Pokémones capturados, las características de cada Pokémon seleccionado en formato de tarjeta, mensajes informativos y un panel de bienvenida.
+- Implementación de un sistema de IU por medio de UI Toolkit que muestra: el listado de Pokémones capturados, las características de cada Pokémon seleccionado en formato de tarjeta, mensajes informativos y un panel de bienvenida. Mientras se muestra el panel lateral, el juego entra en pausa.
 - Implementación de un sistema de persistencia (guardado y carga del estado del juego) por medio de serialización en un archivo JSON.
 - Selección de juego nuevo o carga del archivo encontrado.
 
