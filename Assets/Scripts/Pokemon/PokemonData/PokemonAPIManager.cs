@@ -86,7 +86,7 @@ public class PokemonAPIManager : MonoBehaviour
 
         pokemonData.position = spawnPosition;
         PutPokemonInScene(id, spawnPosition);
-        _infoPanelManager.AddMessage($"Pokemon added to the scene: \n{pokemonData.pokemonName}");
+        _infoPanelManager.AddMessage($"Pokémon adicionado a la escena: \n{pokemonData.pokemonName}");
         
         pokemonDataList.Add(pokemonData);
 
@@ -104,7 +104,7 @@ public class PokemonAPIManager : MonoBehaviour
 
     public string AddPokemonById(int id){
         inventory.AddPokemon(pokemonDataList[id]);
-        _infoPanelManager.AddMessage($"You caught: \n{pokemonDataList[id].pokemonName}");
+        _infoPanelManager.AddMessage($"Capturaste un Pokémon: \n{pokemonDataList[id].pokemonName}");
         return pokemonDataList[id].pokemonName;
         // StartCoroutine(ClearMessage());
  

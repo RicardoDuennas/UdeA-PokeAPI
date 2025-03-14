@@ -37,9 +37,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();        
-        // Keep the cursor visible so it is possible to interact with the sidebar
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
     }
 
     void FixedUpdate()
@@ -63,7 +60,6 @@ public class PlayerController : MonoBehaviour
             string name = pokeAPIManager.AddPokemonById(id);
             infoSideBar.AddPokemonToList(name);
             gameManager.SendDataToSave();
-            // Debug.Log("Pokemon Released: " + id);
         }   
     }
 

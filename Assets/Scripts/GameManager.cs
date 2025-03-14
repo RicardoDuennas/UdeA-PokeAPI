@@ -69,4 +69,9 @@ public class GameManager : MonoBehaviour
         //     Debug.Log("Data loaded successfully!");
         // }
     }
+
+    public bool FileExist()
+    {
+        return _saveLoadManager.FileExist();
+    }
 }

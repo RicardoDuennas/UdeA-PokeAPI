@@ -61,4 +61,9 @@ public class SaveLoadManager
             return null;
         }
     }
+
+    public bool FileExist()
+    {
+        return File.Exists(_savePath);
+    }    
 }

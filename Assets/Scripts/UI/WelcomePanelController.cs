@@ -1,13 +1,16 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class WelcomePanelController : MonoBehaviour
 {
     private UIDocument _uiDocument;
+    private VisualElement _jsonMessage;
     private Button _loadJSONButton;
     private Button _fetchPokemonsButton;
     private VisualElement _welcomePanel;
     [SerializeField] InfoSideBarManager _infoSideBar;
+    [SerializeField] private GameManager gameManager;
 
     private void OnEnable()
     {
@@ -18,10 +21,20 @@ public class WelcomePanelController : MonoBehaviour
         _loadJSONButton = _uiDocument.rootVisualElement.Q<Button>("LoadJSONButton");
         _fetchPokemonsButton = _uiDocument.rootVisualElement.Q<Button>("FetchPokemonsButton");
         _welcomePanel = _uiDocument.rootVisualElement.Q<VisualElement>("WelcomePanel");
+        _jsonMessage  = _uiDocument.rootVisualElement.Q<Label>("JSONMessage");
 
         // Add click event handlers
         _loadJSONButton.clicked += OnLoadJSONClicked;
         _fetchPokemonsButton.clicked += OnFetchPokemonsClicked;
+    }
+
+    private void Start() {
+        if (!gameManager.FileExist()) 
+        {
+            _loadJSONButton.style.display = DisplayStyle.None;
+            _jsonMessage.style.display = DisplayStyle.None;
+            _fetchPokemonsButton.text = "Iniciar";
+        }
     }
 
     private void OnDisable()
