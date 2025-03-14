@@ -41,7 +41,6 @@ public class PokemonPool : MonoBehaviour
         var pokemonObject = pokePool.Get();
         
         pokemonObject.tag = "Pokemon";
-        pokemonObject.name = "Pokemon" + id;
         pokemonObject.id = id;
         pokemonObject.transform.position = spawnPosition;
         pokemonObject.transform.parent = pokemonContainer.transform;

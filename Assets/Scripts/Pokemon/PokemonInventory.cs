@@ -30,4 +30,13 @@ public class PokemonInventory
         return CollectedPokemon.Count;
     }
 
+    // Method to update the entire list
+    public void UpdateCollectedPokemon(List<PokemonData> newList)
+    {
+        if (newList != null)
+        {
+            CollectedPokemon = new List<PokemonData>(newList);
+        }
+    }
+
 }

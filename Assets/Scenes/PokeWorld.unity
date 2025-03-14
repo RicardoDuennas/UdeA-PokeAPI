@@ -186,6 +186,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3bf22b0f5ab94d4cbb4b07ea57c9e10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _infoPanelManager: {fileID: 1835472796}
+  _infoSideBar: {fileID: 1835472795}
 --- !u!4 &217880599
 Transform:
   m_ObjectHideFlags: 0
@@ -1793,6 +1795,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ec3513125400d549a3ca4ae300d480c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfPokemons: 20
+  _numberOfPokemons: 20
   pokemonDataList: []
   pokePool: {fileID: 431659932}

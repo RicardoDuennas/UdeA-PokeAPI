@@ -52,12 +52,12 @@ public class SaveLoadManager
             // Deserialize JSON to SaveData
             SaveData saveData = JsonUtility.FromJson<SaveData>(json);
 
-            Debug.Log("Data loaded from: " + _savePath);
+            // Debug.Log("Data loaded from: " + _savePath);
             return saveData;
         }
         else
         {
-            Debug.LogWarning("No save file found at: " + _savePath);
+            // Debug.LogWarning("No save file found at: " + _savePath);
             return null;
         }
     }

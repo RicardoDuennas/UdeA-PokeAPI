@@ -9,9 +9,9 @@ using Random = UnityEngine.Random;
 public class PokemonAPIManager : MonoBehaviour
 {
 
-    [SerializeField] private int numberOfPokemons = 20;   
+    [SerializeField] private int _numberOfPokemons = 20;   
     [SerializeField] public List<PokemonData> pokemonDataList = new List<PokemonData>();
-    [SerializeField] private PokemonInventory inventory;
+    [SerializeField] public PokemonInventory inventory;
     [SerializeField] private PokemonPool pokePool;
     private InfoPanelManager _infoPanelManager;
 
@@ -28,7 +28,7 @@ public class PokemonAPIManager : MonoBehaviour
 
     private IEnumerator FetchPokemonData()
     {
-        for (int i = 0; i < numberOfPokemons; i++)
+        for (int i = 0; i < _numberOfPokemons; i++)
         {
             int randomPokemonId = Random.Range(1, 1000); // Limit of random Pokemons to select from
             string url = $"https://pokeapi.co/api/v2/pokemon/{randomPokemonId}/";
@@ -91,6 +91,14 @@ public class PokemonAPIManager : MonoBehaviour
         pokemonDataList.Add(pokemonData);
     }
 
+    private void AddPokemonToScene(PokemonData pokemon)
+    {
+
+        PutPokemonInScene(pokemon.id, pokemon.position);
+        _infoPanelManager.AddMessage($"Pokémon adicionado a la escena: \n{pokemon.pokemonName}");
+        
+    }
+
     public string AddPokemonById(int id){
         inventory.AddPokemon(pokemonDataList[id]);
         _infoPanelManager.AddMessage($"Capturaste un Pokémon: \n{pokemonDataList[id].pokemonName}");
@@ -141,6 +149,17 @@ public class PokemonAPIManager : MonoBehaviour
     {
         return pokemonDataList;
     }
+
+    // public void debugInventoryList()
+    // {
+    //     Debug.Log("Inventory List");
+    //     for (int i = 0; i < inventory.CollectedPokemon.Count; i++)
+    //     {
+    //         Debug.Log(inventory.CollectedPokemon[i].id);
+    //         Debug.Log(inventory.CollectedPokemon[i].pokemonName);
+    //         Debug.Log("");
+    //     }
+    // }
 
     [System.Serializable]
     private class PokemonAPIResponse
