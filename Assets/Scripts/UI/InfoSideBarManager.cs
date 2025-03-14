@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections;
-using UnityEditor.Search;
 
 public class InfoSideBarManager : MonoBehaviour
 {

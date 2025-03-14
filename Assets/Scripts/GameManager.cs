@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
                 _pokeAPIManager.PutPokemonInScene(pokemon.id, pokemon.position);
             }
             _infoPanelManager.AddMessage("¡Datos cargados correctamente!");
-            Debug.Log("Data loaded successfully!");
+            //Debug.Log("Data loaded successfully!");
         }
 
         
