@@ -24,4 +24,7 @@ Siguiendo las indicaciones de la prueba, se desarrollaron los siguientes sistema
 - Audio general del juego | Rhythmic Game Menu Ambience by PatrickLieberkind https://freesound.org/s/396024/ License: Attribution 4.0
 - Efecto de audio de captura de Pokémones | UI Confirmation Alert, C4.wav by InspectorJ https://freesound.org/s/403019/ License: Attribution 4.0
 
+## Nota
+El build para Windows se encuentra en la carpeta WinBuild
+
 Ricardo Alfonzo Dueñas - 2025
